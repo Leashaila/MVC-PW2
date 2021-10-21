@@ -21,7 +21,9 @@ class UsuarioAdminModel{
         return $this->database->query(""); //consulta de buscar reportes
     }
 
-
+    public function getBuscarCabinaMasVendida(){
+        return $this->database->query(""); // consulta de buscar cabina mas vendida
+    }
 
 
 
