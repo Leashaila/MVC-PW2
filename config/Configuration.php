@@ -24,7 +24,7 @@ class Configuration{
     }
 
     private  function createCancionesModel(){
-        require_once("model/CancionesModel.php");
+        require_once("model/AdminModel.php");
         $database = $this->getDatabase();
         return new CancionesModel($database);
     }

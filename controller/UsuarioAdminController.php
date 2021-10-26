@@ -12,12 +12,21 @@ class UsuarioAdminController{
         $this->printer = $printer;
     }
 
-    public function description(){
-        $reportes = $this->usuarioAdminModel->getBuscarReportes($_GET[""]);
+    public function listaPokemon(){
+        $canciones = $this->cancionesModel->getCanciones();
+        $listaPokemon = $this->usuarioAdminModel->getMostrarListaDePokemon();
 
-        $data["reportes"] = $reportes;
-        echo $this->printer->render( "view/usuarioAdminView.html" , $data);
+
+        $this->log->info("Se llamo a pokemones");
+
+        $data["listaPokemon"] = $listaPokemon;
+        echo $this->printer->render( "view/labandaView.html" , $data);
     }
+
+
+
+
+
 
 
 }
