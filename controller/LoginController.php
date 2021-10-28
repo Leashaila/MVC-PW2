@@ -5,6 +5,7 @@ class LoginController
 
     private $render;
     private $usuarioModel;
+
     public function __construct(\Render $render, \UsuarioModel $usuarioModel)
     {
         $this->render = $render;
@@ -25,22 +26,44 @@ class LoginController
             unset($_SESSION["usuarioInactivo"]);
         }
 
-        if(isset($_SESSION['registroCorrecto']) && $_SESSION['registroCorrecto'] === 1){
+        if (isset($_SESSION['registroCorrecto']) && $_SESSION['registroCorrecto'] === 1) {
             $data['registroCorrecto'] = "Se ha registrado correctamente. El Administrador activará su cuenta pronto.";
             unset($_SESSION['registroCorrecto']);
         }
 
-        if(isset($_SESSION['registroIncorrecto']) && $_SESSION['registroIncorrecto'] === 1){
+        if (isset($_SESSION['registroIncorrecto']) && $_SESSION['registroIncorrecto'] === 1) {
             $data['registroIncorrecto'] = "Hubo un problema, intente nuevamente.";
             unset($_SESSION['registroIncorrecto']);
         }
-        if(isset($_SESSION['emailExistente']) && $_SESSION['emailExistente'] === 1){
+        if (isset($_SESSION['emailExistente']) && $_SESSION['emailExistente'] === 1) {
             $data['emailExistente'] = "Ya posee una cuenta con ese Email. Contacte un Administrador para ser habilitado.";
             unset($_SESSION['emailExistente']);
         }
 
-        echo $this->render->renderizar("view/loginView.mustache",$data);
+        echo $this->render->renderizar("view/loginView.mustache", $data);
     }
+
+    public function validarLogin()
+    {
+        if (isset($_POST["usuario"]) && isset($_POST["contraseña"])) {
+            $usuario = $_POST["usuario"];
+            $contraseña = md5($_POST["contraseña"]);
+            $user = $this->loginModel->getUsuarioYContraseña($usuario, $contraseña);
+
+            if (empty($user)) {
+                $_SESSION["errorLogin"] = 1;
+                header("Location: /loginView.mustache");
+                exit();
+            } else {
+                $_SESSION["logueado"] = 0;
+                $_SESSION["id"] = $user[0]["Id"];;
+                $_SESSION["nombre"] = $user[0]["Nombre"];
+                $_SESSION["apellido"] = $user[0]["Apellido"];
+            }
+
+
+        }
+
 
 //    public function validarLogin(){
 //        if (isset($_POST["email"]) && isset($_POST["contrasenia"])) {
@@ -51,11 +74,11 @@ class LoginController
 //
 //            if(empty($user)){
 //                $_SESSION["errorLogin"] = 1;
-//                header("Location: /tpFinalGrupo13");
+//                header("Location: /loginView.mustache");
 //                exit();
 //            } else if($user[0]["Active"] == 0){
 //                $_SESSION["usuarioInactivo"] = 1;
-//                header("Location: /tpFinalGrupo13");
+//                header("Location: /Location: /loginView.mustache");
 //                exit();
 //            }else  {
 //
@@ -63,15 +86,15 @@ class LoginController
 //                $_SESSION["id"] = $user[0]["Id"];;
 //                $_SESSION["nombre"] = $user[0]["Nombre"];
 //                $_SESSION["apellido"] = $user[0]["Apellido"];
-//
-//
+
+
 //                $_SESSION["esAdministrador"] = $this->isAdmin($user[0]["pTipoUsuario"]);
 //                $_SESSION["esSupervisor"] = $this->isSupervisor($user[0]["pTipoUsuario"]);
 //                $_SESSION["esEncargadoTaller"] = $this->isEncargado($user[0]["pTipoUsuario"]);
 //                $_SESSION["esChofer"] = $this->isChofer($user[0]["pTipoUsuario"]);
 //                $_SESSION["esMecanico"] = $this->isMecanico($user[0]["pTipoUsuario"]);
 //                $_SESSION["esLlano"] = $this->isLlano($user[0]["pTipoUsuario"]);
-//
+
 //                header("Location: /tpFinalGrupo13/home");
 //                exit();
 //            }
@@ -99,4 +122,5 @@ class LoginController
 //    public function isLlano($rol) {
 //        return  $rol == 6 ? true : false;
 //    }
+    }
 }

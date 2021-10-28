@@ -39,6 +39,9 @@ class Configuracion
         return new LoginController($render,$usuarioModel);
     }
 
+
+
+
     public function getRouter(){
         include_once("Router.php");
         return new Router($this);
