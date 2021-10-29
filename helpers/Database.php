@@ -21,7 +21,12 @@ class Database
     public function consulta($sql)
     {
         $result = $this->conn->query($sql);
-        return $result->fetch_all(MYSQLI_ASSOC);
+        if($result && mysqli_num_rows($result) > 0){
+
+            return $result->fetch_all(MYSQLI_ASSOC);
+
+        }
+        return [];
     }
 
     public function ejecutar($sql){

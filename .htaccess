@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
    RewriteEngine On
-   RewriteBase /tpFinalGrupo13/
+   RewriteBase /MVC-PW2/
 
     RewriteRule ^(public)($|/) - [L,NC]
     RewriteRule ^(third-party)/(phpqrcode)/(QRGenerator.php) - [L,NC]

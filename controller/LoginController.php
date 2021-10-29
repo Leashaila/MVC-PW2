@@ -6,7 +6,7 @@ class LoginController
     private $render;
     private $usuarioModel;
 
-    public function __construct(\Render $render, \UsuarioModel $usuarioModel)
+    public function __construct(\Render $render, \LoginModel $usuarioModel)
     {
         $this->render = $render;
         $this->usuarioModel = $usuarioModel;
@@ -47,18 +47,24 @@ class LoginController
     {
         if (isset($_POST["usuario"]) && isset($_POST["contraseña"])) {
             $usuario = $_POST["usuario"];
-            $contraseña = md5($_POST["contraseña"]);
-            $user = $this->loginModel->getUsuarioYContraseña($usuario, $contraseña);
+            $contraseña = $_POST["contraseña"];
+            $user = $this->usuarioModel->getUsuarioYContraseña($_POST["usuario"], $_POST["contraseña"]);
 
             if (empty($user)) {
                 $_SESSION["errorLogin"] = 1;
-                header("Location: /loginView.mustache");
+                header("Location: /MVC-PW2/loginView");
+
                 exit();
+
             } else {
                 $_SESSION["logueado"] = 0;
                 $_SESSION["id"] = $user[0]["Id"];;
                 $_SESSION["nombre"] = $user[0]["Nombre"];
                 $_SESSION["apellido"] = $user[0]["Apellido"];
+
+                header("Location: /MVC-PW2/usuarioAdminView");
+                exit();
+
             }
 
 

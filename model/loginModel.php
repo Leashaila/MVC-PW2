@@ -10,7 +10,7 @@ class loginModel{
 
 
     public function getUsuarioYContraseña($usuario,$contraseña){
-        return $this->database->query("select nombre_usuario,contraseña
+        return $this->database->consulta("select nombre_usuario,contraseña
                                         from usuario
                                         where nombre_usuario =".$usuario. "and contraseña=".$contraseña);
     }

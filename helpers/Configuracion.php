@@ -30,10 +30,16 @@ class Configuracion
         return new usuarioModel($database);
     }
 
+     public static function getLoginModel(){
+        $database = self::getDatabase();
+        include_once ("model/loginModel.php");
+        return new loginModel($database);
+    }
+
     public static function getLoginController()
     {
         $render = self::getRender();
-        $usuarioModel = self::getUsuarioModel();
+        $usuarioModel = self::getLoginModel();
 
         include_once("controller/LoginController.php");
         return new LoginController($render,$usuarioModel);
