@@ -18,7 +18,7 @@ class usuarioModel{
 
     public function subirTipoPokemon($nombre_tipo){
 
-    	return $this->database->consulta("insert into pokemon(nombre_pokemon, descripcion, id_usuario,id_tipo)
+    	return $this->database->consulta("insert into tipo(nombre_tipo)
         								  values ($nombre_tipo)");
 
     }
