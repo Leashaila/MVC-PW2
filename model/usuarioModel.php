@@ -23,6 +23,13 @@ class usuarioModel{
 
     }
 
+    public function getTipoPokemon($nombre_tipo){
+
+    	return $this->database->consulta("select id_tipo from tipo 
+    									  where nombre_tipo=".$nombre_tipo);
+
+    }
+
     public function subirPokemon($nombre, $descripcion, $id_usuario, $id_tipo ){
         return $this->database->consulta("insert into pokemon (nombre_pokemon, descripcion, id_usuario,id_tipo)
         								  values ($nombre, $descripcion, $id_usuario, $id_tipo)");

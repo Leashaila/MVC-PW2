@@ -56,7 +56,8 @@ class LoginController
 
                 exit();
 
-            } else {
+            }else{
+
                 $_SESSION["logueado"] = 0;
                 $_SESSION["id"] = $user[0]["Id"];;
                 $_SESSION["nombre"] = $user[0]["Nombre"];
@@ -66,7 +67,6 @@ class LoginController
                 exit();
 
             }
-
 
         }
 
